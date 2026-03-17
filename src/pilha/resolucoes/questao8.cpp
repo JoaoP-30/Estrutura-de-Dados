@@ -20,10 +20,6 @@ Saídas:
 */
 
 #include <iostream>
-#include <stack>
-
-/*
-// Versão sem STL stack
 
 class pilha
 {
@@ -50,15 +46,9 @@ public:
         delete[] pilhaMenor;
     }
 
-    bool vazio() { return tamanhoP == 0; }
-
     void empilhar(int e)
     {
-        if (tamanhoM == 0)
-        {
-            pilhaMenor[tamanhoM++] = e;
-        }
-        else if (e <= pilhaMenor[tamanhoM - 1])
+        if (tamanhoM == 0 || e <= pilhaMenor[tamanhoM - 1])
         {
             pilhaMenor[tamanhoM++] = e;
         }
@@ -68,32 +58,22 @@ public:
 
     void desempilhar()
     {
-        if (vazio())
+        if (tamanhoP == 0)
         {
             std::cout << "VAZIA\n";
             return;
         }
 
-        if (pilhaMenor[tamanhoM - 1] == topo())
+        if (pilhaMenor[tamanhoM - 1] == pilhaPrincipal[tamanhoP - 1])
         {
             tamanhoM--;
         }
 
-        std::cout << topo();
+        std::cout << pilhaPrincipal[tamanhoP - 1] << ' ';
 
         tamanhoP--;
     }
 
-    int topo()
-    {
-        return pilhaPrincipal[tamanhoP - 1];
-    }
-
-    int topoMenor()
-    {
-        return pilhaMenor[tamanhoM - 1];
-    }
-        
     void menor()
     {
         if (tamanhoM == 0)
@@ -102,70 +82,13 @@ public:
             return;
         }
 
-        std::cout << topoMenor();
+        std::cout << pilhaMenor[tamanhoM - 1];
     }
 
     void imprimirEDesempilhar()
     {
-        while (!vazio())
+        while (tamanhoP > 0)
         {
-            desempilhar();
-            std::cout << ' ';
-        }
-        std::cout << '\n';
-    }
-};
-*/
-
-class pilha
-{
-private:
-    std::stack<int> principal;
-    std::stack<int> s2;
-
-public:
-    pilha()
-    {
-    }
-
-    void empilhar(int e)
-    {
-        if(s2.empty() || e <= s2.top()){
-            s2.push(e);
-        }
-    
-        principal.push(e);
-    }
-
-    void desempilhar()
-    {
-        if(principal.empty()){
-            std::cout<<"VAZIA\n";
-            return;
-        }
-
-        if(s2.top() == principal.top()){
-            s2.pop();        
-        }
-
-        std::cout << principal.top() << '\n';
-    
-        principal.pop();
-    }
-
-    void menor()
-    {   
-        if(s2.empty()){
-            std::cout << "VAZIA\n";
-            return;
-        }
-
-        std::cout << s2.top();
-    }
-
-    void imprimirEDesempilhar()
-    {
-        while(!principal.empty()){
             desempilhar();
         }
         std::cout << '\n';
